@@ -2,7 +2,7 @@ inherit rubygem
 
 NAME="ruby-erubis"
 VERSION=2.7.0
-RELEASE=1
+RELEASE=2
 CATEGORY="Ruby"
 SUMMARY="Ruby erubis extension"
 DESCRIPTION="Erubis is an implementation of eRuby and has the following features:
@@ -16,3 +16,17 @@ DESCRIPTION="Erubis is an implementation of eRuby and has the following features
 * Print statement available
 * Easy to extend and customize in subclass
 * Ruby on Rails support"
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-doc"
+ruby_erubis_CONTENTS="--exclude=examples usr/bin/erubis ${RUBYGEM_INSTDIR#/} ${RUBYGEM_SPEC#/}"
+ruby_erubis_doc_CONTENTS="${RUBYGEM_DOCDIR#/} ${RUBYGEM_INSTDIR#/}/examples/"
+
+src_install() {
+	cd ${S}
+	rubygem_install
+
+	rm -fr ${D}${RUBYGEM_INSTDIR}/benchmark/
+	rm -fr ${D}${RUBYGEM_INSTDIR}/doc-api/
+}
